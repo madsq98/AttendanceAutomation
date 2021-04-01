@@ -17,7 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            MSSQLHandler.connect("10.176.111.31", "CSe20A_27", "CSe20A_27", "CSe20A_27 Attendance");
+            MSSQLHandler.connect("10.176.111.31", "CSe20A_31", "CSe20A_31", "fravær");
         } catch(Exception e) {
             e.printStackTrace();
             System.exit(0);
