@@ -1,0 +1,65 @@
+.background{
+    -fx-background-color: #D8E2EC;
+}
+
+.topbar{
+    -fx-background-color: #b7c4d0;
+}
+
+.buttons{
+    -fx-background-color: #b7c4d0;
+}
+
+.side{
+    -fx-background-color: #91a6b3;
+}
+
+.selected{
+    -fx-background-color: #a9bdca;
+}
+
+.exit{
+    -fx-fill: #da3333;
+}
+
+.exit:hover{
+    -fx-fill: white;
+}
+
+.minimize{
+    -fx-fill: #eea039;
+}
+.minimize:hover {
+    -fx-fill: white;
+}
+
+.maximize{
+    -fx-fill: #5eb623;
+}
+
+.maximize:hover{
+    -fx-fill: white;
+}
+
+.sidebutton{
+    -fx-text-fill: white;
+    -fx-border-color: #acc1cf;
+    -fx-border-radius: 1;
+}
+
+.sidebutton:hover{
+    -fx-background-color: #acc1cf;
+}
+
+.sidebutton:selected{
+    -fx-background-color: #acc1cf;
+}
+
+.logout{
+    -fx-text-fill: white;
+    -fx-background-color: #b7c4d0;
+}
+
+.logout:hover{
+    -fx-background-color: #d5e1ec;
+}
