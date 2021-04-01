@@ -5,13 +5,12 @@ import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class MSSQLHandler implements IDatabaseConnection {
+public class MSSQLHandler {
     private static SQLServerDataSource dataSource;
 
     private static Connection connection;
 
-    @Override
-    public static void connect(String hostname, String username, String password, String database) throws SQLException {
+    public static void connect(String hostname, String username, String password, String database) throws Exception {
         dataSource = new SQLServerDataSource();
         dataSource.setServerName(hostname);
         dataSource.setDatabaseName(database);
@@ -21,7 +20,6 @@ public class MSSQLHandler implements IDatabaseConnection {
         connection = dataSource.getConnection();
     }
 
-    @Override
     public static Connection getConnection() {
         return connection;
     }
