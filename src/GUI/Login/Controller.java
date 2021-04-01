@@ -42,27 +42,29 @@ public class Controller {
         AccountDAL dal = new AccountDAL();
 
         try {
-            Account test = dal.getAccountLogin(username, password);
+            Account loginUser = dal.getAccountLogin(username, password);
 
-            System.out.println(test);
+            if(loginUser != null) {
+                Stage root1 = (Stage) root.getScene().getWindow();
+
+                Stage stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("../Dashboard/View.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.show();
+
+                GUI.Dashboard.Controller controller = fxmlLoader.getController();
+
+                controller.setAccount(loginUser);
+
+                root1.close();
+            } else {
+                // SHOW ALERT FOR WRONG USERNAME/PASSWORD
+            }
         } catch(SQLException e) {
             e.printStackTrace();
         }
-
-        System.out.println(username + password);
-
-        Stage root1 = (Stage) root.getScene().getWindow();
-
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("../Dashboard/View.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(scene);
-        stage.show();
-
-        GUI.Dashboard.Controller controller = fxmlLoader.getController();
-
-        root1.close();
     }
 }

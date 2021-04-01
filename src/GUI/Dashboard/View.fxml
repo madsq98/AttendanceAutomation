@@ -27,7 +27,7 @@
             <Pane prefHeight="576.0" prefWidth="238.0" styleClass="side" BorderPane.alignment="CENTER">
                <children>
                   <Label layoutX="66.0" layoutY="72.0" text="BILLEDE AF PERSON" textFill="WHITE" />
-                  <Label layoutX="33.0" layoutY="144.0" text="Velkommen Laura Hansen" textFill="WHITE">
+                  <Label fx:id="accountName" layoutX="33.0" layoutY="144.0" text="Velkommen Laura Hansen" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
