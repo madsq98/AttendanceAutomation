@@ -2,7 +2,7 @@ package GUI.Dashboard.TeacherCreateAccount;
 
 import BE.Account;
 import BLL.AccountBLL;
-import GUI.Dashboard.ISubPage;
+import GUI.Dashboard.Interfaces.ISubPage;
 
 import java.util.List;
 

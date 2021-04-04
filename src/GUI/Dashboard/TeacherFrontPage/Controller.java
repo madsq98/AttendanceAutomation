@@ -2,9 +2,7 @@ package GUI.Dashboard.TeacherFrontPage;
 
 import BE.Account;
 import BLL.AccountBLL;
-import GUI.Dashboard.ISubPage;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import GUI.Dashboard.Interfaces.ISubPage;
 
 import java.util.List;
 

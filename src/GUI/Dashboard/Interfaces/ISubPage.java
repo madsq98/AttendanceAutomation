@@ -1,4 +1,4 @@
-package GUI.Dashboard;
+package GUI.Dashboard.Interfaces;
 
 import BE.Account;
 import BLL.AccountBLL;
