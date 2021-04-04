@@ -19,12 +19,12 @@
                     <Font size="15.0" />
                 </font>
             </Label>
-            <JFXButton layoutX="40.0" layoutY="228.0" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Forside">
+            <JFXButton layoutX="40.0" layoutY="228.0" onAction="#studentFrontpage" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Forside">
                 <font>
                     <Font size="15.0" />
                 </font>
             </JFXButton>
-            <JFXButton layoutX="40.0" layoutY="268.0" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Statistik">
+            <JFXButton layoutX="40.0" layoutY="268.0" onAction="#studentStatistics" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Statistik">
                 <font>
                     <Font size="15.0" />
                 </font>
