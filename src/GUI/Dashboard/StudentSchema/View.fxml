@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="GUI.Dashboard.StudentSchema.Controller"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Dashboard.StudentSchema.Controller">
+   <children>
+      <TableView prefHeight="400.0" prefWidth="600.0">
+        <columns>
+          <TableColumn prefWidth="100.0" text="Mandag" />
+          <TableColumn prefWidth="100.0" text="Tirsdag" />
+            <TableColumn prefWidth="100.0" text="Onsdag" />
+            <TableColumn prefWidth="100.0" text="Torsdag" />
+            <TableColumn prefWidth="100.0" text="Fredag" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>
