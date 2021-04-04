@@ -2,6 +2,8 @@ package GUI.Dashboard;
 
 import BE.Account;
 import BE.UserType;
+import BLL.AccountBLL;
+import BLL.SchemaBLL;
 import GUI.Dashboard.Interfaces.ISideMenu;
 import GUI.Dashboard.Interfaces.ISubPage;
 import javafx.event.ActionEvent;
@@ -15,8 +17,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Controller {
+    private AccountBLL accountBLL;
+    private SchemaBLL schemaBLL;
+
     public Label accountName;
     private Account loggedInUser;
     private Controller currentController;
@@ -46,6 +52,11 @@ public class Controller {
 
     public void setAccount(Account loggedInUser) {
         this.loggedInUser = loggedInUser;
+        try {
+            schemaBLL = new SchemaBLL(loggedInUser);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         String name = loggedInUser.getFirstName() + " " + loggedInUser.getLastName();
 
         switch(loggedInUser.getType()) {
@@ -70,7 +81,9 @@ public class Controller {
             contentBorderPane.setCenter(p);
 
             ISubPage controller = loader.getController();
-            controller.setAccounts(null);
+            controller.setAccountBLL(accountBLL);
+            controller.setCurrentAccount(loggedInUser);
+            controller.setSchemaBLL(schemaBLL);
         } catch(IOException e) {
             e.printStackTrace();
         }
