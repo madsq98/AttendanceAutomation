@@ -60,7 +60,7 @@ public class Controller {
         }
     }
 
-    private void setPage(String page) {
+    public void setPage(String page) {
         String path = "./" + page + "/View.fxml";
         try {
             FXMLLoader loader = new FXMLLoader();

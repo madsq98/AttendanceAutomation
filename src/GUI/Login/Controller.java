@@ -1,6 +1,7 @@
 package GUI.Login;
 
 import BE.Account;
+import BLL.AccountBLL;
 import DAL.Server.AccountDAL;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Controller {
+    AccountBLL aBLL = new AccountBLL();
 
     public JFXTextField loginUsername;
     public JFXPasswordField loginPassword;
@@ -39,10 +41,8 @@ public class Controller {
         String username = loginUsername.getText();
         String password = loginPassword.getText();
 
-        AccountDAL dal = new AccountDAL();
-
         try {
-            Account loginUser = dal.getAccountLogin(username, password);
+            Account loginUser = aBLL.checkLogin(username, password);
 
             if(loginUser != null) {
                 Stage root1 = (Stage) root.getScene().getWindow();

@@ -21,4 +21,12 @@ public class Controller implements ISideMenu {
     public void logout(ActionEvent actionEvent) {
         mainController.logout(actionEvent);
     }
+
+    public void studentStatistics(ActionEvent actionEvent) {
+        mainController.setPage("StudentStatistics");
+    }
+
+    public void studentFrontpage(ActionEvent actionEvent) {
+        mainController.setPage("StudentSchema");
+    }
 }
