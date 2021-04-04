@@ -7,12 +7,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.jfoenix:jfoenix:9.0.10" level="project" />
     <orderEntry type="library" name="de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2" level="project" />
     <orderEntry type="library" name="de.jensd:fontawesomefx-materialdesignfont:2.0.26-9.1.2" level="project" />
     <orderEntry type="library" name="com.microsoft.sqlserver:mssql-jdbc:9.1.1.jre15-preview" level="project" />
     <orderEntry type="library" name="lib1" level="project" />
     <orderEntry type="library" name="de.jensd:fontawesomefx-commons:9.1.2" level="project" />
     <orderEntry type="library" name="de.jensd:fontawesomefx-controls:9.1.2" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="com.jfoenix:jfoenix:9.0.10" level="project" />
+    <orderEntry type="library" name="com.microsoft.sqlserver:mssql-jdbc:9.3.0.jre15-preview" level="project" />
   </component>
 </module>

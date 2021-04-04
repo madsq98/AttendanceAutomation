@@ -22,7 +22,7 @@
                 <FontAwesomeIconView fill="#5eb623" glyphName="CIRCLE" layoutX="741.0" layoutY="17.0" onMouseClicked="#maximize" styleClass="maximize" />
             </children>
         </Pane>
-      <BorderPane layoutY="25.0" prefHeight="576.0" prefWidth="800.0">
+      <BorderPane fx:id="contentBorderPane" layoutY="25.0" prefHeight="576.0" prefWidth="800.0">
          <left>
             <Pane prefHeight="576.0" prefWidth="238.0" styleClass="side" BorderPane.alignment="CENTER">
                <children>

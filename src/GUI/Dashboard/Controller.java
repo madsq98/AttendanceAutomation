@@ -3,17 +3,27 @@ package GUI.Dashboard;
 import BE.Account;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
 
 public class Controller {
     public Label accountName;
     private Account loggedInUser;
+    private Controller currentController;
 
     @FXML
     private AnchorPane dRoot;
+
+    @FXML
+    private BorderPane contentBorderPane;
 
     public void exit(){
         System.exit(0);
@@ -29,10 +39,37 @@ public class Controller {
     }
 
     public void logout(ActionEvent actionEvent) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("./StudentSchema/View.fxml"));
+
+            contentBorderPane.setCenter(root);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setAccount(Account loggedInUser) {
         this.loggedInUser = loggedInUser;
         accountName.setText("Velkommen " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
+
+        switch(loggedInUser.getType()) {
+            case STUDENT -> setPage("StudentSchema");
+            case TEACHER -> setPage("TeacherFrontPage");
+        }
+    }
+
+    private void setPage(String page) {
+        String path = "./" + page + "/View.fxml";
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(path));
+            Parent p = loader.load();
+
+            contentBorderPane.setCenter(p);
+
+            currentController = loader.getController();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 }
