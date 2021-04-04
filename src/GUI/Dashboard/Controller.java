@@ -1,6 +1,7 @@
 package GUI.Dashboard;
 
 import BE.Account;
+import GUI.Dashboard.Interfaces.ISubPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 
 public class Controller {
@@ -39,13 +39,7 @@ public class Controller {
     }
 
     public void logout(ActionEvent actionEvent) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("./StudentSchema/View.fxml"));
-
-            contentBorderPane.setCenter(root);
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        exit();
     }
 
     public void setAccount(Account loggedInUser) {
@@ -67,7 +61,8 @@ public class Controller {
 
             contentBorderPane.setCenter(p);
 
-            currentController = loader.getController();
+            ISubPage controller = loader.getController();
+            controller.setAccounts(null);
         } catch(IOException e) {
             e.printStackTrace();
         }
