@@ -1,6 +1,8 @@
 package GUI.Dashboard;
 
 import BE.Account;
+import BE.UserType;
+import GUI.Dashboard.Interfaces.ISideMenu;
 import GUI.Dashboard.Interfaces.ISubPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,11 +46,17 @@ public class Controller {
 
     public void setAccount(Account loggedInUser) {
         this.loggedInUser = loggedInUser;
-        accountName.setText("Velkommen " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
+        String name = loggedInUser.getFirstName() + " " + loggedInUser.getLastName();
 
         switch(loggedInUser.getType()) {
-            case STUDENT -> setPage("StudentSchema");
-            case TEACHER -> setPage("TeacherFrontPage");
+            case STUDENT:
+                setMenu(UserType.STUDENT,name);
+                setPage("StudentSchema");
+                break;
+            case TEACHER:
+                setMenu(UserType.TEACHER,name);
+                setPage("TeacherFrontPage");
+                break;
         }
     }
 
@@ -64,6 +72,23 @@ public class Controller {
             ISubPage controller = loader.getController();
             controller.setAccounts(null);
         } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setMenu(UserType type, String name) {
+        String path = "./" + ((type == UserType.STUDENT) ? "StudentMenu" : "TeacherMenu") + "/Menu.fxml";
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(path));
+            Parent p = loader.load();
+
+            contentBorderPane.setLeft(p);
+
+            ISideMenu controller = loader.getController();
+            controller.setName(name);
+            controller.setController(this);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
