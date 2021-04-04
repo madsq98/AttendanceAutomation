@@ -14,7 +14,7 @@ public class AccountDAL {
     }
 
     public Account getAccountByUsername(String username) throws SQLException {
-        String query = "SELECT Accounts.id, Accounts.username, Accounts.type, UserInfo.firstName, UserInfo.lastName, UserInfo.email, UserInfo.phone FROM Accounts INNER JOIN UserInfo ON UserInfo.accountId = Accounts.id WHERE Accounts.username = ?";
+        String query = "SELECT Accounts.id, Accounts.username, Accounts.password, Accounts.type, UserInfo.firstName, UserInfo.lastName, UserInfo.email, UserInfo.phone FROM Accounts INNER JOIN UserInfo ON UserInfo.accountId = Accounts.id WHERE Accounts.username = ?";
 
         PreparedStatement execute = conn.prepareStatement(query);
         execute.setString(1,username);

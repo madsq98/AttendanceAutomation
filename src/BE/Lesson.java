@@ -36,4 +36,13 @@ public class Lesson {
     public void setStopTime(Timestamp stopTime) {
         this.stopTime = stopTime;
     }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "courseName='" + courseName + '\'' +
+                ", startTime=" + startTime +
+                ", stopTime=" + stopTime +
+                '}';
+    }
 }
