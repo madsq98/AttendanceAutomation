@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.text.Font?>
+<Pane xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="GUI.Dashboard.TeacherMenu.Controller"
+      prefHeight="576.0" prefWidth="238.0" styleClass="side" BorderPane.alignment="CENTER">
+    <children>
+        <Label layoutX="66.0" layoutY="72.0" text="BILLEDE AF PERSON" textFill="WHITE" />
+        <Label fx:id="accountName" layoutX="33.0" layoutY="144.0" text="Velkommen Laura Hansen" textFill="WHITE">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Label>
+        <JFXButton layoutX="40.0" layoutY="228.0" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Forside">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </JFXButton>
+        <JFXButton layoutX="40.0" layoutY="268.0" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Statistik">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </JFXButton>
+        <JFXButton layoutX="40.0" layoutY="308.0" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Opret bruger">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </JFXButton>
+        <JFXButton layoutX="40.0" layoutY="515.0" onAction="#logout" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Log ud">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </JFXButton>
+    </children>
+</Pane>
