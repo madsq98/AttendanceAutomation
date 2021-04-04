@@ -67,7 +67,8 @@ public class Controller {
 
             contentBorderPane.setCenter(p);
 
-            currentController = loader.getController();
+            ISubPage controller = loader.getController();
+            controller.setAccounts(null);
         } catch(IOException e) {
             e.printStackTrace();
         }
