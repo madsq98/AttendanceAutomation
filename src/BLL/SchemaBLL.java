@@ -2,7 +2,10 @@ package BLL;
 
 import BE.Account;
 import BE.Lesson;
+import BE.Schema;
 import DAL.SchemaDAL;
+import UTIL.ArrayTools;
+import javafx.collections.FXCollections;
 
 import java.sql.SQLException;
 import java.time.DayOfWeek;
@@ -62,5 +65,29 @@ public class SchemaBLL {
         returnLessons.add(friday);
 
         return returnLessons;
+    }
+
+    public List<Schema> getWeekSchemaFormatted() {
+        List<List<Lesson>> weekSchema = getWeekSchema();
+
+        int indexOfLargest = ArrayTools.getIndexOfLargest(weekSchema);
+
+        List<Schema> returnList = new ArrayList<>();
+        for(int i = 0; i < weekSchema.get(indexOfLargest).size(); i++) {
+            Schema s = new Schema();
+            Lesson monday = (i < weekSchema.get(0).size() ) ? weekSchema.get(0).get(i) : new Lesson();
+            s.setMonday(monday);
+            Lesson tuesday = (i < weekSchema.get(1).size() ) ? weekSchema.get(1).get(i) : new Lesson();
+            s.setTuesday(tuesday);
+            Lesson wednesday = (i < weekSchema.get(2).size() ) ? weekSchema.get(2).get(i) : new Lesson();
+            s.setWednesday(wednesday);
+            Lesson thursday = (i < weekSchema.get(3).size() ) ? weekSchema.get(3).get(i) : new Lesson();
+            s.setThursday(thursday);
+            Lesson friday = (i < weekSchema.get(4).size() ) ? weekSchema.get(4).get(i) : new Lesson();
+            s.setFriday(friday);
+            returnList.add(s);
+        }
+
+        return returnList;
     }
 }
