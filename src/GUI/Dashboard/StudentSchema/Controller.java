@@ -9,16 +9,21 @@ import GUI.Dashboard.Interfaces.ISubPage;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Controller implements ISubPage {
     private Account currentAccount;
     private AccountBLL accountBLL;
     private SchemaBLL schemaBLL;
+
+    private Lesson currentLesson;
 
     @FXML
     private TableView<Schema> studentSchema;
@@ -51,6 +56,8 @@ public class Controller implements ISubPage {
     }
 
     private void setItemsInSchema() {
+        currentLesson = schemaBLL.getCurrentLesson();
+
         List<Schema> weekSchema = schemaBLL.getWeekSchemaFormatted();
 
         ObservableList<Schema> items = FXCollections.observableArrayList();
@@ -69,5 +76,20 @@ public class Controller implements ISubPage {
         schemaWednesday.prefWidthProperty().bind(studentSchema.widthProperty().multiply(0.19));
         schemaThursday.prefWidthProperty().bind(studentSchema.widthProperty().multiply(0.19));
         schemaFriday.prefWidthProperty().bind(studentSchema.widthProperty().multiply(0.19));
+
+        for(Object r : studentSchema.getItems()) {
+            int i = 1;
+            for (Object c : studentSchema.getColumns()) {
+                TableColumn column = (TableColumn) c;
+
+                if(i == LocalDate.now().getDayOfWeek().getValue())
+                    column.setStyle("-fx-background-color:#e6e6fa;");
+                i++;
+            }
+        }
+    }
+
+    public void registerAttendance(ActionEvent actionEvent) {
+        studentSchema.setItems(null);
     }
 }

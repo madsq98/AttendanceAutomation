@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,7 +22,13 @@ public class SchemaBLL {
 
     private List<Lesson> allLessons;
 
+    private Account account;
+
+    private AttendanceBLL attendanceBLL;
+
     public SchemaBLL(Account a) throws SQLException {
+        account = a;
+        attendanceBLL = new AttendanceBLL(a);
         dbAccess = new SchemaDAL();
         allLessons = new ArrayList<>();
 
@@ -46,6 +53,8 @@ public class SchemaBLL {
             for(Lesson l : allLessons) {
                 LocalDate comparison = l.getStartTime().toLocalDateTime().toLocalDate();
                 if(thisDate.equals(comparison)) {
+                    String sign = (attendanceBLL.hasAttended(account,l)) ? "✓" : "✗";
+                    l.setCourseName(l.getCourseName()+sign);
                     switch(i) {
                         case Calendar.MONDAY -> monday.add(l);
                         case Calendar.TUESDAY -> tuesday.add(l);
@@ -89,5 +98,17 @@ public class SchemaBLL {
         }
 
         return returnList;
+    }
+
+    public Lesson getCurrentLesson() {
+        LocalDateTime now = LocalDateTime.now();
+        Lesson currentLesson = null;
+
+        for(Lesson l : allLessons) {
+            if(now.isAfter(l.getStartTime().toLocalDateTime()) && now.isBefore(l.getStopTime().toLocalDateTime()))
+                currentLesson = l;
+        }
+
+        return currentLesson;
     }
 }
