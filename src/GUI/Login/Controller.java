@@ -28,7 +28,7 @@ public class Controller {
         System.exit(0);
     }
 
-    public void minimize(MouseEvent mouseEvent) {
+    public void minimize() {
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setIconified(true);
     }
@@ -37,7 +37,7 @@ public class Controller {
 
     }
 
-    public void login(MouseEvent mouseEvent) throws IOException {
+    public void login() throws IOException {
         String username = loginUsername.getText();
         String password = loginPassword.getText();
 
