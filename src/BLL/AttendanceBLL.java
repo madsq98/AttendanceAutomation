@@ -25,5 +25,7 @@ public class AttendanceBLL {
 
     public void setAttended(Account a, Lesson l) {
         allAttendance.add(new Attendance(a,l));
+
+        //Implement connection to DAL layer as well
     }
 }

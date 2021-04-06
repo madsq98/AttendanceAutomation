@@ -91,6 +91,7 @@ public class Controller implements ISubPage {
     }
 
     public void registerAttendance(ActionEvent actionEvent) {
-        UserAlert.showAlert("Åh nej!","Du har ingen lektioner lige nu, og du kan derfor ikke registrere din tilstedeværelse!", Alert.AlertType.WARNING);
+        if(currentLesson == null)
+            UserAlert.showAlert("Åh nej!","Du har ingen lektioner lige nu, og du kan derfor ikke registrere din tilstedeværelse!", Alert.AlertType.WARNING);
     }
 }
