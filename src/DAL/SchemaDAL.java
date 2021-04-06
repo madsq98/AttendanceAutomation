@@ -43,6 +43,8 @@ public class SchemaDAL {
             }
         }
 
+        lessons.sort( (l1, l2) -> l1.getStartTime().compareTo(l2.getStartTime()) );
+
         return lessons;
     }
 }

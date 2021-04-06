@@ -1,11 +1,18 @@
 package BE;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class Lesson {
     private String courseName;
     private Timestamp startTime;
     private Timestamp stopTime;
+
+    public Lesson() {
+        this.courseName = "EMPTY";
+        this.startTime = null;
+        this.stopTime = null;
+    }
 
     public Lesson(String courseName, Timestamp startTime, Timestamp stopTime) {
         this.courseName = courseName;
@@ -39,10 +46,8 @@ public class Lesson {
 
     @Override
     public String toString() {
-        return "Lesson{" +
-                "courseName='" + courseName + '\'' +
-                ", startTime=" + startTime +
-                ", stopTime=" + stopTime +
-                '}';
+        if(courseName == "EMPTY") return "";
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return courseName + "\n" + sdf.format(startTime) + " - " + sdf.format(stopTime);
     }
 }
