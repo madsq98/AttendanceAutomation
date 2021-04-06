@@ -12,10 +12,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class SchemaBLL {
     private SchemaDAL dbAccess;
@@ -53,8 +50,11 @@ public class SchemaBLL {
             for(Lesson l : allLessons) {
                 LocalDate comparison = l.getStartTime().toLocalDateTime().toLocalDate();
                 if(thisDate.equals(comparison)) {
-                    String sign = (attendanceBLL.hasAttended(account,l)) ? "✓" : "✗";
-                    l.setCourseName(l.getCourseName()+sign);
+                    if(new Random().nextBoolean()) attendanceBLL.setAttended(account,l);
+                    String sign = (attendanceBLL.hasAttended(account,l)) ? "✔" : "✖";
+                    sign = (isInFuture(l)) ? "" : sign;
+                    sign = (l.equals(getCurrentLesson())) ? "⌛" : sign;
+                    l.setCourseName(l.getCourseName()+" " + sign);
                     switch(i) {
                         case Calendar.MONDAY -> monday.add(l);
                         case Calendar.TUESDAY -> tuesday.add(l);
@@ -110,5 +110,9 @@ public class SchemaBLL {
         }
 
         return currentLesson;
+    }
+
+    public boolean isInFuture(Lesson l) {
+        return l.getStopTime().toLocalDateTime().isAfter(LocalDateTime.now());
     }
 }

@@ -22,4 +22,8 @@ public class AttendanceBLL {
     public boolean hasAttended(Account a, Lesson l) {
         return allAttendance.contains(new Attendance(a,l));
     }
+
+    public void setAttended(Account a, Lesson l) {
+        allAttendance.add(new Attendance(a,l));
+    }
 }

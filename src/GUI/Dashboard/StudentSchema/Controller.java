@@ -6,12 +6,13 @@ import BE.Schema;
 import BLL.AccountBLL;
 import BLL.SchemaBLL;
 import GUI.Dashboard.Interfaces.ISubPage;
+import UTIL.UserAlert;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -90,6 +91,6 @@ public class Controller implements ISubPage {
     }
 
     public void registerAttendance(ActionEvent actionEvent) {
-        studentSchema.setItems(null);
+        UserAlert.showAlert("Åh nej!","Du har ingen lektioner lige nu, og du kan derfor ikke registrere din tilstedeværelse!", Alert.AlertType.WARNING);
     }
 }

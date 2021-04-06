@@ -24,4 +24,15 @@ public class Attendance {
     public void setLesson(Lesson lesson) {
         this.lesson = lesson;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this) return true;
+
+        if(!(o instanceof Attendance)) return false;
+
+        Attendance a = (Attendance) o;
+
+        return lesson.equals(a.getLesson()) && account.equals(a.getAccount());
+    }
 }
