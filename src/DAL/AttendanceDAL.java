@@ -31,7 +31,6 @@ public class AttendanceDAL {
         while(rs.next()) {
             Lesson l = schemaDAL.getLessonById(rs.getInt("lessonsId"));
             if(l != null)
-                System.out.println(l);
                 returnList.add(new Attendance(a,l));
         }
         return returnList;
