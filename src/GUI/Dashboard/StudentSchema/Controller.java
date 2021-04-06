@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
@@ -86,6 +87,8 @@ public class Controller implements ISubPage {
         schemaTuesday.setCellValueFactory(c -> {
             Lesson l = c.getValue().getTuesday();
             if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
+            System.out.println(attendanceBLL.hasAttended(currentAccount,l));
+            System.out.println(l.getId());
             String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
             sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
             sign = (l.equals(currentLesson)) ? "⌛" : sign;
@@ -137,5 +140,11 @@ public class Controller implements ISubPage {
     public void registerAttendance(ActionEvent actionEvent) {
         if(currentLesson == null)
             UserAlert.showAlert("Åh nej!","Du har ingen lektioner lige nu, og du kan derfor ikke registrere din tilstedeværelse!", Alert.AlertType.WARNING);
+
+        try {
+            attendanceBLL.setAttended(currentAccount, currentLesson);
+        } catch (SQLException e) {
+            UserAlert.showAlert("Der opstod en fejl!",e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 }
