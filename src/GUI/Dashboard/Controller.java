@@ -3,6 +3,7 @@ package GUI.Dashboard;
 import BE.Account;
 import BE.UserType;
 import BLL.AccountBLL;
+import BLL.AttendanceBLL;
 import BLL.SchemaBLL;
 import GUI.Dashboard.Interfaces.ISideMenu;
 import GUI.Dashboard.Interfaces.ISubPage;
@@ -22,6 +23,7 @@ import java.sql.SQLException;
 public class Controller {
     private AccountBLL accountBLL;
     private SchemaBLL schemaBLL;
+    private AttendanceBLL attendanceBLL;
 
     public Label accountName;
     private Account loggedInUser;
@@ -51,6 +53,7 @@ public class Controller {
     }
 
     public void setAccount(Account loggedInUser) {
+        this.attendanceBLL = new AttendanceBLL(loggedInUser);
         this.loggedInUser = loggedInUser;
         try {
             schemaBLL = new SchemaBLL(loggedInUser);
@@ -84,6 +87,7 @@ public class Controller {
             controller.setAccountBLL(accountBLL);
             controller.setCurrentAccount(loggedInUser);
             controller.setSchemaBLL(schemaBLL);
+            controller.setAttendanceBLL(attendanceBLL);
         } catch(IOException e) {
             e.printStackTrace();
         }

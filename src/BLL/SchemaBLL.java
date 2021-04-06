@@ -50,11 +50,14 @@ public class SchemaBLL {
             for(Lesson l : allLessons) {
                 LocalDate comparison = l.getStartTime().toLocalDateTime().toLocalDate();
                 if(thisDate.equals(comparison)) {
+                    /*
                     if(new Random().nextBoolean()) attendanceBLL.setAttended(account,l);
                     String sign = (attendanceBLL.hasAttended(account,l)) ? "✔" : "✖";
                     sign = (isInFuture(l)) ? "" : sign;
                     sign = (l.equals(getCurrentLesson())) ? "⌛" : sign;
                     l.setCourseName(l.getCourseName()+" " + sign);
+
+                     */
                     switch(i) {
                         case Calendar.MONDAY -> monday.add(l);
                         case Calendar.TUESDAY -> tuesday.add(l);
@@ -112,7 +115,7 @@ public class SchemaBLL {
         return currentLesson;
     }
 
-    public boolean isInFuture(Lesson l) {
+    public static boolean isInFuture(Lesson l) {
         return l.getStopTime().toLocalDateTime().isAfter(LocalDateTime.now());
     }
 }

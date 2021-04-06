@@ -4,10 +4,12 @@ import BE.Account;
 import BE.Lesson;
 import BE.Schema;
 import BLL.AccountBLL;
+import BLL.AttendanceBLL;
 import BLL.SchemaBLL;
 import GUI.Dashboard.Interfaces.ISubPage;
 import UTIL.UserAlert;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,6 +26,7 @@ public class Controller implements ISubPage {
     private Account currentAccount;
     private AccountBLL accountBLL;
     private SchemaBLL schemaBLL;
+    private AttendanceBLL attendanceBLL;
 
     private Lesson currentLesson;
 
@@ -50,6 +54,9 @@ public class Controller implements ISubPage {
     }
 
     @Override
+    public void setAttendanceBLL(AttendanceBLL attendanceBLL) { this.attendanceBLL = attendanceBLL; }
+
+    @Override
     public void setSchemaBLL(SchemaBLL schemaBLL) {
         this.schemaBLL = schemaBLL;
 
@@ -66,11 +73,48 @@ public class Controller implements ISubPage {
 
         studentSchema.setItems(items);
 
-        schemaMonday.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getMonday().toString()));
-        schemaTuesday.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTuesday().toString()));
-        schemaWednesday.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getWednesday().toString()));
-        schemaThursday.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getThursday().toString()));
-        schemaFriday.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getFriday().toString()));
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+        schemaMonday.setCellValueFactory(c -> {
+            Lesson l = c.getValue().getMonday();
+            if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
+            String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
+            sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
+            sign = (l.equals(currentLesson)) ? "⌛" : sign;
+            return new SimpleStringProperty(l.getCourseName() + " " + sign + "\n" + sdf.format(l.getStartTime()) + " - " + sdf.format(l.getStopTime()));
+        });
+        schemaTuesday.setCellValueFactory(c -> {
+            Lesson l = c.getValue().getTuesday();
+            if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
+            String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
+            sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
+            sign = (l.equals(currentLesson)) ? "⌛" : sign;
+            return new SimpleStringProperty(l.getCourseName() + " " + sign + "\n" + sdf.format(l.getStartTime()) + " - " + sdf.format(l.getStopTime()));
+        });
+        schemaWednesday.setCellValueFactory(c -> {
+            Lesson l = c.getValue().getWednesday();
+            if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
+            String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
+            sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
+            sign = (l.equals(currentLesson)) ? "⌛" : sign;
+            return new SimpleStringProperty(l.getCourseName() + " " + sign + "\n" + sdf.format(l.getStartTime()) + " - " + sdf.format(l.getStopTime()));
+        });
+        schemaThursday.setCellValueFactory(c -> {
+            Lesson l = c.getValue().getThursday();
+            if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
+            String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
+            sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
+            sign = (l.equals(currentLesson)) ? "⌛" : sign;
+            return new SimpleStringProperty(l.getCourseName() + " " + sign + "\n" + sdf.format(l.getStartTime()) + " - " + sdf.format(l.getStopTime()));
+        });
+        schemaFriday.setCellValueFactory(c -> {
+            Lesson l = c.getValue().getFriday();
+            if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
+            String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
+            sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
+            sign = (l.equals(currentLesson)) ? "⌛" : sign;
+            return new SimpleStringProperty(l.getCourseName() + " " + sign + "\n" + sdf.format(l.getStartTime()) + " - " + sdf.format(l.getStopTime()));
+        });
 
         schemaMonday.prefWidthProperty().bind(studentSchema.widthProperty().multiply(0.19));
         schemaTuesday.prefWidthProperty().bind(studentSchema.widthProperty().multiply(0.19));

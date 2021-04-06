@@ -3,11 +3,13 @@ package GUI.Login;
 import BE.Account;
 import BLL.AccountBLL;
 import DAL.Server.AccountDAL;
+import UTIL.UserAlert;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -61,7 +63,7 @@ public class Controller {
 
                 root1.close();
             } else {
-                // SHOW ALERT FOR WRONG USERNAME/PASSWORD
+                UserAlert.showAlert("Forkert!","Brugernavn og/eller adgangskode er forkert. Prøv igen!", Alert.AlertType.WARNING);
             }
         } catch(SQLException e) {
             e.printStackTrace();

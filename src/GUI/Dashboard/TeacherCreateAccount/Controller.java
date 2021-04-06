@@ -2,6 +2,7 @@ package GUI.Dashboard.TeacherCreateAccount;
 
 import BE.Account;
 import BLL.AccountBLL;
+import BLL.AttendanceBLL;
 import BLL.SchemaBLL;
 import GUI.Dashboard.Interfaces.ISubPage;
 
@@ -11,6 +12,7 @@ public class Controller implements ISubPage {
     private Account currentAccount;
     private AccountBLL accountBLL;
     private SchemaBLL schemaBLL;
+    private AttendanceBLL attendanceBLL;
 
     @Override
     public void setCurrentAccount(Account a) {
@@ -26,4 +28,7 @@ public class Controller implements ISubPage {
     public void setSchemaBLL(SchemaBLL schemaBLL) {
         this.schemaBLL = schemaBLL;
     }
+
+    @Override
+    public void setAttendanceBLL(AttendanceBLL attendanceBLL) { this.attendanceBLL = attendanceBLL; }
 }
