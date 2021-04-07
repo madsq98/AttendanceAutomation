@@ -3,13 +3,16 @@ package GUI.Dashboard;
 import BE.Account;
 import BE.UserType;
 import BLL.AccountBLL;
+import BLL.AttendanceBLL;
 import BLL.SchemaBLL;
 import GUI.Dashboard.Interfaces.ISideMenu;
 import GUI.Dashboard.Interfaces.ISubPage;
+import UTIL.UserAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -22,6 +25,7 @@ import java.sql.SQLException;
 public class Controller {
     private AccountBLL accountBLL;
     private SchemaBLL schemaBLL;
+    private AttendanceBLL attendanceBLL;
 
     public Label accountName;
     private Account loggedInUser;
@@ -51,6 +55,11 @@ public class Controller {
     }
 
     public void setAccount(Account loggedInUser) {
+        try {
+            this.attendanceBLL = new AttendanceBLL(loggedInUser);
+        } catch (SQLException e) {
+            UserAlert.showAlert("Der opstod en fejl!",e.getMessage(), Alert.AlertType.ERROR);
+        }
         this.loggedInUser = loggedInUser;
         try {
             schemaBLL = new SchemaBLL(loggedInUser);
@@ -84,6 +93,7 @@ public class Controller {
             controller.setAccountBLL(accountBLL);
             controller.setCurrentAccount(loggedInUser);
             controller.setSchemaBLL(schemaBLL);
+            controller.setAttendanceBLL(attendanceBLL);
         } catch(IOException e) {
             e.printStackTrace();
         }

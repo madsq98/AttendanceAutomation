@@ -16,6 +16,8 @@ public class AccountBLL {
         if(!username.isEmpty() && !password.isEmpty()) {
             Account check = dbAccess.getAccountByUsername(username);
 
+            if(check == null) return null;
+
             return (check.getPassword().equals(password)) ? check : null;
         } else
             return null;
