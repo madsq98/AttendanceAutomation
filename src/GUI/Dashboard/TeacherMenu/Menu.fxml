@@ -34,6 +34,11 @@
                 <Font size="15.0" />
             </font>
         </JFXButton>
+        <JFXButton layoutX="40.0" layoutY="475.0" onAction="#teacherSettings" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Indstillinger">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </JFXButton>
         <JFXButton layoutX="40.0" layoutY="515.0" onAction="#logout" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Log ud">
             <font>
                 <Font size="15.0" />

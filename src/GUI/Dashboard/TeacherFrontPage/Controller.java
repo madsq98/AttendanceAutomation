@@ -31,4 +31,9 @@ public class Controller implements ISubPage {
 
     @Override
     public void setAttendanceBLL(AttendanceBLL attendanceBLL) { this.attendanceBLL = attendanceBLL; }
+
+    @Override
+    public void load() {
+
+    }
 }

@@ -1,6 +1,7 @@
 package BLL;
 
 import BE.Account;
+import BE.Course;
 import BE.Lesson;
 import BE.Schema;
 import DAL.SchemaDAL;
@@ -8,6 +9,7 @@ import UTIL.ArrayTools;
 import javafx.collections.FXCollections;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -102,6 +104,27 @@ public class SchemaBLL {
         }
 
         return currentLesson;
+    }
+
+    public List<Course> getUserCourses() throws SQLException {
+        return dbAccess.getUserCourses(account);
+    }
+
+    public List<Lesson> getLessonsInterval(LocalDate from, LocalDate to, Course course) {
+        List<Lesson> returnList = new ArrayList<>();
+        for(Lesson lesson : allLessons) {
+            LocalDate start = lesson.getStartTime().toLocalDateTime().toLocalDate();
+            if( (start.isAfter(from) || start.isEqual(from)) && (start.isBefore(to) || start.isEqual(to)) ) {
+                if(course != null && course.getId() != -1) {
+                    if(course.getName().equals(lesson.getCourseName())) {
+                        returnList.add(lesson);
+                    }
+                } else
+                    returnList.add(lesson);
+            }
+        }
+
+        return returnList;
     }
 
     public static boolean isInFuture(Lesson l) {

@@ -1,7 +1,8 @@
-package DAL.Server;
+package DAL;
 
 import BE.Account;
 import BE.UserType;
+import DAL.Server.MSSQLHandler;
 
 import javax.xml.transform.Result;
 import java.sql.*;
@@ -73,5 +74,23 @@ public class AccountDAL {
         }
         else
             return -1;
+    }
+
+    public void updateAccount(Account a) throws SQLException {
+        int accountId = a.getId();
+        String query1 = "UPDATE Accounts SET password = ? WHERE id = ?;";
+        String query2 = "UPDATE UserInfo SET firstName = ?, lastName = ?, email = ?, phone = ? WHERE accountId = ?;";
+        PreparedStatement ps1 = conn.prepareStatement(query1);
+        ps1.setString(1,a.getPassword());
+        ps1.setInt(2,a.getId());
+        PreparedStatement ps2 = conn.prepareStatement(query2);
+        ps2.setString(1,a.getFirstName());
+        ps2.setString(2,a.getLastName());
+        ps2.setString(3,a.getEmail());
+        ps2.setInt(4,a.getPhone());
+        ps2.setInt(5,a.getId());
+
+        ps1.executeUpdate();
+        ps2.executeUpdate();
     }
 }

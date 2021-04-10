@@ -1,7 +1,7 @@
 package BLL;
 
 import BE.Account;
-import DAL.Server.AccountDAL;
+import DAL.AccountDAL;
 
 import java.sql.SQLException;
 
@@ -32,5 +32,9 @@ public class AccountBLL {
         a.setId(newId);
 
         return true;
+    }
+
+    public void updateAccount(Account a) throws SQLException {
+        dbAccess.updateAccount(a);
     }
 }

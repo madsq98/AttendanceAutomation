@@ -58,6 +58,11 @@ public class Controller implements ISubPage {
     public void setAttendanceBLL(AttendanceBLL attendanceBLL) { this.attendanceBLL = attendanceBLL; }
 
     @Override
+    public void load() {
+
+    }
+
+    @Override
     public void setSchemaBLL(SchemaBLL schemaBLL) {
         this.schemaBLL = schemaBLL;
 
