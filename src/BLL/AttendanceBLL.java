@@ -38,6 +38,16 @@ public class AttendanceBLL {
         dbAccess.saveAttendance(at);
     }
 
+    public void removeAttendance(Account a, Lesson l) throws SQLException {
+        if(!hasAttended(a,l)) return;
+
+        Attendance at = new Attendance(a,l);
+
+        allAttendance.remove(at);
+
+        dbAccess.removeAttendance(at);
+    }
+
     public List<Attendance> getAttendanceInterval(LocalDate from, LocalDate to, Course course) {
         List<Attendance> returnList = new ArrayList<>();
         for(Attendance a : allAttendance) {

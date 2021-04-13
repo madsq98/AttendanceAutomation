@@ -8,18 +8,21 @@ import BLL.AccountBLL;
 import BLL.AttendanceBLL;
 import BLL.SchemaBLL;
 import GUI.Dashboard.Interfaces.ISubPage;
+import UTIL.UserAlert;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.util.Callback;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 
 public class Controller implements ISubPage {
@@ -135,6 +138,64 @@ public class Controller implements ISubPage {
         clmnAttendance.setCellValueFactory(c -> {
             return new SimpleStringProperty( (attendanceBLL.hasAttended(currentAccount,c.getValue())) ? "Ja" : "Nej" );
         });
+
+        tblViewLessons.getSelectionModel().setCellSelectionEnabled(true);
+        tblViewLessons.setEditable(true);
+        clmnAttendance.setEditable(true);
+
+        ObservableList<String> comboBoxList = FXCollections.observableArrayList("Ja","Nej");
+        Callback<TableColumn<Lesson, String>, TableCell<Lesson, String>> defaultDropDownCellFactory = ComboBoxTableCell.forTableColumn(comboBoxList);
+        clmnAttendance.setCellFactory(col -> {
+            TableCell<Lesson, String> cell = defaultDropDownCellFactory.call(col);
+            cell.itemProperty().addListener((observable, oldValue, newValue) -> {
+                TableRow<Lesson> row = cell.getTableRow();
+                if(row == null)
+                    cell.setEditable(false);
+                else {
+                    Lesson l = row.getItem();
+                    if(l != null) {
+                        LocalDateTime now = LocalDateTime.now();
+                        LocalDateTime startTime = l.getStartTime().toLocalDateTime();
+                        LocalDateTime stopTime = l.getStopTime().toLocalDateTime();
+
+                        if (startTime.isAfter(now)) {
+                            cell.setEditable(false);
+                        }
+                        else {
+                            cell.setEditable(true);
+                        }
+                    } else
+                        cell.setEditable(false);
+                }
+            });
+            return cell;
+        });
+
+        clmnAttendance.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Lesson, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Lesson, String> lessonStringCellEditEvent) {
+                        String oldVal = lessonStringCellEditEvent.getOldValue();
+                        String newVal = lessonStringCellEditEvent.getNewValue();
+                        if(newVal.equals(oldVal))
+                            return;
+
+                        if(newVal.equals("Ja")) {
+                            try {
+                                attendanceBLL.setAttended(currentAccount,lessonStringCellEditEvent.getRowValue());
+                            } catch (SQLException throwables) {
+                                UserAlert.showAlert("Der gik noget galt!","Der opstod desværre en fejl... Prøv igen!", Alert.AlertType.ERROR);
+                            }
+                        } else {
+                            try {
+                                attendanceBLL.removeAttendance(currentAccount, lessonStringCellEditEvent.getRowValue());
+                            } catch(SQLException throwables) {
+                                UserAlert.showAlert("Der gik noget galt!","Der opstod desværre en fejl... Prøv igen!", Alert.AlertType.ERROR);
+                            }
+                        }
+                    }
+                }
+        );
     }
 
     private void update() {

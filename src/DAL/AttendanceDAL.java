@@ -44,4 +44,13 @@ public class AttendanceDAL {
 
         ps.executeUpdate();
     }
+
+    public void removeAttendance(Attendance a) throws SQLException {
+        String query = "DELETE FROM Attendance WHERE accountId = ? AND lessonsId = ?;";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setInt(1,a.getAccount().getId());
+        ps.setInt(2,a.getLesson().getId());
+
+        ps.executeUpdate();
+    }
 }
