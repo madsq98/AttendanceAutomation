@@ -35,4 +35,6 @@ public class Controller implements ISideMenu {
     public void studentSettings(ActionEvent actionEvent) {
         mainController.setPage("UserSettings");
     }
+
+    public void studentRegistrations() { mainController.setPage("StudentRegistrations"); }
 }

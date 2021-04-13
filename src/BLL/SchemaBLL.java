@@ -123,11 +123,11 @@ public class SchemaBLL {
                     returnList.add(lesson);
             }
         }
-
+        Collections.reverse(returnList);
         return returnList;
     }
 
     public static boolean isInFuture(Lesson l) {
-        return l.getStopTime().toLocalDateTime().isAfter(LocalDateTime.now());
+        return l.getStartTime().toLocalDateTime().isAfter(LocalDateTime.now());
     }
 }

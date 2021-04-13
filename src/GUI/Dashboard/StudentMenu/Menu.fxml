@@ -24,6 +24,11 @@
                     <Font size="15.0" />
                 </font>
             </JFXButton>
+            <JFXButton layoutX="40.0" layoutY="308.0" onAction="#studentRegistrations" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Tidl. registreringer">
+                <font>
+                    <Font size="15.0" />
+                </font>
+            </JFXButton>
             <JFXButton layoutX="40.0" layoutY="475.0" onAction="#studentSettings" prefHeight="32.0" prefWidth="155.0" styleClass="sidebutton" text="Indstillinger">
                     <font>
                         <Font size="15.0" />
