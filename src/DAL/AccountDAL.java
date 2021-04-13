@@ -40,6 +40,32 @@ public class AccountDAL {
         return returnAccount;
     }
 
+    public Account getAccountById(int idd) throws SQLException {
+        String query = "SELECT Accounts.id, Accounts.username, Accounts.password, Accounts.type, UserInfo.firstName, UserInfo.lastName, UserInfo.email, UserInfo.phone FROM Accounts INNER JOIN UserInfo ON UserInfo.accountId = Accounts.id WHERE Accounts.id = ?";
+
+        PreparedStatement execute = conn.prepareStatement(query);
+        execute.setInt(1,idd);
+
+        ResultSet rs = execute.executeQuery();
+
+        if(!rs.next())
+            return null;
+
+        int id = rs.getInt("id");
+        String user = rs.getString("username");
+        String pass = rs.getString("password");
+        UserType type = (rs.getInt("type") == 1) ? UserType.STUDENT : UserType.TEACHER;
+        String firstName = rs.getString("firstName");
+        String lastName = rs.getString("lastName");
+        String email = rs.getString("email");
+        int phone = rs.getInt("phone");
+
+        Account returnAccount = new Account(user,pass,type,firstName,lastName,email,phone);
+        returnAccount.setId(id);
+
+        return returnAccount;
+    }
+
     public int saveNewAccount(Account a) throws SQLException {
         String query = "INSERT INTO Accounts ('username','password','type') VALUES (?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);

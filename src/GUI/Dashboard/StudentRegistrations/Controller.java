@@ -75,7 +75,7 @@ public class Controller implements ISubPage {
 
         try {
             observableCourses.add(new Course(-1,"Alle fag"));
-            observableCourses.addAll(schemaBLL.getUserCourses());
+            observableCourses.addAll(schemaBLL.getUserCourses(currentAccount));
             courseSelector.setItems(observableCourses);
             courseSelector.getSelectionModel().selectFirst();
         } catch(SQLException e) {

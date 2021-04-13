@@ -21,7 +21,7 @@ public class AttendanceBLL {
         dbAccess = new AttendanceDAL();
         allAttendance = new ArrayList<>();
 
-        allAttendance.addAll(dbAccess.getAllAttendance(a));
+        allAttendance.addAll(dbAccess.getAllAttendance());
     }
 
     public boolean hasAttended(Account a, Lesson l) {
@@ -48,6 +48,10 @@ public class AttendanceBLL {
         dbAccess.removeAttendance(at);
     }
 
+    public List<Attendance> getAllAttendance() {
+        return allAttendance;
+    }
+
     public List<Attendance> getAttendanceInterval(LocalDate from, LocalDate to, Course course) {
         List<Attendance> returnList = new ArrayList<>();
         for(Attendance a : allAttendance) {
@@ -72,6 +76,7 @@ public class AttendanceBLL {
 
         for(Lesson l : lessons) {
             if(c.getId() != -1) {
+                System.out.println("Did " + a.getFirstName() + " " + a.getLastName() + " attend " + l.getCourseName() + "?");
                 if (l.getCourseName().equals(c.getName())) {
                     totalLessons++;
                     if (hasAttended(a, l))
@@ -114,5 +119,24 @@ public class AttendanceBLL {
         }
 
         return absence;
+    }
+
+    public double getTotalAttendance(Course c, LocalDate from, LocalDate to) throws SQLException {
+        List<Account> students = dbAccess.getAccountsFromCourse(c);
+
+        double sumAttendance = 0;
+        for(Account a : students) {
+            SchemaBLL sBLL = new SchemaBLL(a);
+            AttendanceBLL aBLL = new AttendanceBLL(a);
+
+            List<Lesson> lessons = sBLL.getLessonsInterval(from,to,c);
+            List<Attendance> attendances = aBLL.getAttendanceInterval(from,to,c);
+
+            double addAttendance = getCourseAttendance(a,c,lessons,attendances);
+
+            sumAttendance += getCourseAttendance(a,c,lessons,attendances);
+        }
+
+        return sumAttendance / students.size();
     }
 }

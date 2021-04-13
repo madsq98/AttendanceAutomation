@@ -1,8 +1,7 @@
 package DAL;
 
-import BE.Account;
-import BE.Attendance;
-import BE.Lesson;
+import BE.*;
+import BLL.AccountBLL;
 import DAL.Server.MSSQLHandler;
 
 import java.sql.Connection;
@@ -15,21 +14,24 @@ import java.util.List;
 public class AttendanceDAL {
     private Connection conn;
     private SchemaDAL schemaDAL;
+    private AccountBLL accountBLL;
 
     public AttendanceDAL() {
         conn = MSSQLHandler.getConnection();
         schemaDAL = new SchemaDAL();
+        accountBLL = new AccountBLL();
     }
 
-    public List<Attendance> getAllAttendance(Account a) throws SQLException {
-        String query = "SELECT * FROM Attendance WHERE accountId = ?;";
+    public List<Attendance> getAllAttendance() throws SQLException {
+        String query = "SELECT * FROM Attendance";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setInt(1,a.getId());
+        //ps.setInt(1,a.getId());
 
         ResultSet rs = ps.executeQuery();
         List<Attendance> returnList = new ArrayList<>();
         while(rs.next()) {
             Lesson l = schemaDAL.getLessonById(rs.getInt("lessonsId"));
+            Account a = accountBLL.getAccountFromId(rs.getInt("accountId"));
             if(l != null)
                 returnList.add(new Attendance(a,l));
         }
@@ -52,5 +54,25 @@ public class AttendanceDAL {
         ps.setInt(2,a.getLesson().getId());
 
         ps.executeUpdate();
+    }
+
+    public List<Account> getAccountsFromCourse(Course c) throws SQLException {
+        AccountBLL accBLL = new AccountBLL();
+
+        String query = "SELECT * FROM UserCourses WHERE courseId = ?;";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setInt(1,c.getId());
+
+        ResultSet rs = ps.executeQuery();
+        List<Account> returnList = new ArrayList<>();
+        while(rs.next()) {
+            Account a = accBLL.getAccountFromId(rs.getInt("accountId"));
+            if(a != null) {
+                if(a.getType() == UserType.STUDENT)
+                    returnList.add(a);
+            }
+        }
+
+        return returnList;
     }
 }

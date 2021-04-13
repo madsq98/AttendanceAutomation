@@ -106,8 +106,8 @@ public class SchemaBLL {
         return currentLesson;
     }
 
-    public List<Course> getUserCourses() throws SQLException {
-        return dbAccess.getUserCourses(account);
+    public List<Course> getUserCourses(Account a) throws SQLException {
+        return dbAccess.getUserCourses(a);
     }
 
     public List<Lesson> getLessonsInterval(LocalDate from, LocalDate to, Course course) {
