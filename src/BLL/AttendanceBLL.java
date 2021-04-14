@@ -76,7 +76,6 @@ public class AttendanceBLL {
 
         for(Lesson l : lessons) {
             if(c.getId() != -1) {
-                System.out.println("Did " + a.getFirstName() + " " + a.getLastName() + " attend " + l.getCourseName() + "?");
                 if (l.getCourseName().equals(c.getName())) {
                     totalLessons++;
                     if (hasAttended(a, l))

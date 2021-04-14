@@ -14,7 +14,6 @@ public class AccountBLL {
 
     public AccountBLL() {
         dbAccess = new AccountDAL();
-        allAccounts =
     }
 
     public Account checkLogin(String username, String password) throws SQLException {

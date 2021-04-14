@@ -33,6 +33,9 @@ public class Attendance {
 
         Attendance a = (Attendance) o;
 
-        return lesson.equals(a.getLesson()) && account.equals(a.getAccount());
+        int lessonId = a.getLesson().getId();
+        int accountId = a.getAccount().getId();
+
+        return (lesson.getId() == lessonId) && (account.getId() == accountId);
     }
 }
