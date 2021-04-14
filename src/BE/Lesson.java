@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 public class Lesson {
+    private int id;
     private String courseName;
     private Timestamp startTime;
     private Timestamp stopTime;
@@ -14,10 +15,18 @@ public class Lesson {
         this.stopTime = null;
     }
 
-    public Lesson(String courseName, Timestamp startTime, Timestamp stopTime) {
+    public Lesson(int id, String courseName, Timestamp startTime, Timestamp stopTime) {
         this.courseName = courseName;
         this.startTime = startTime;
         this.stopTime = stopTime;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getCourseName() {

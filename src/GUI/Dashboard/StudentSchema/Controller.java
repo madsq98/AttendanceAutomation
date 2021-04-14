@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
@@ -134,8 +135,17 @@ public class Controller implements ISubPage {
         }
     }
 
-    public void registerAttendance(ActionEvent actionEvent) {
-        if(currentLesson == null)
-            UserAlert.showAlert("Åh nej!","Du har ingen lektioner lige nu, og du kan derfor ikke registrere din tilstedeværelse!", Alert.AlertType.WARNING);
+    public void registerAttendance(ActionEvent actionEvent) throws SQLException {
+        if(currentLesson == null) {
+            UserAlert.showAlert("Åh nej!", "Du har ingen lektioner lige nu, og du kan derfor ikke registrere din tilstedeværelse!", Alert.AlertType.WARNING);
+        }else {
+            attendanceBLL.setAttended(currentAccount,currentLesson);
+            UserAlert.showAlert("SÅDAN JOHAN!", "Du Har registeret tilstedeværelse", Alert.AlertType.WARNING);
+        }
+
+
+
     }
+
+
 }

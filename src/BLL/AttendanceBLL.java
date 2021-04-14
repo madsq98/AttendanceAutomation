@@ -5,6 +5,7 @@ import BE.Attendance;
 import BE.Lesson;
 import DAL.AttendanceDAL;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +24,16 @@ public class AttendanceBLL {
         return allAttendance.contains(new Attendance(a,l));
     }
 
-    public void setAttended(Account a, Lesson l) {
-        allAttendance.add(new Attendance(a,l));
+    public void setAttended(Account a, Lesson l) throws SQLException {
+
+
+        if(hasAttended(a,l)) {
+            return;
+        }
+        Attendance at = new Attendance(a,l);
+        allAttendance.add(at);
+        dbAccess.saveAttendance(at);
+
 
         //Implement connection to DAL layer as well
     }

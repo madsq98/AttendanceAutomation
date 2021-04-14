@@ -37,7 +37,7 @@ public class SchemaDAL {
                 Timestamp start = rs2.getTimestamp("start");
                 Timestamp stop = rs2.getTimestamp("stop");
 
-                Lesson l = new Lesson(courseName,start,stop);
+                Lesson l = new Lesson(courseId,courseName,start,stop);
 
                 lessons.add(l);
             }
