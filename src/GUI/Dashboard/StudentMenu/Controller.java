@@ -4,6 +4,8 @@ import GUI.Dashboard.Interfaces.ISideMenu;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 
+import java.io.IOException;
+
 public class Controller implements ISideMenu {
     public Label accountName;
     GUI.Dashboard.Controller mainController;
@@ -18,7 +20,7 @@ public class Controller implements ISideMenu {
         accountName.setText("Velkommen " + name);
     }
 
-    public void logout(ActionEvent actionEvent) {
+    public void logout(ActionEvent actionEvent) throws IOException {
         mainController.logout(actionEvent);
     }
 
@@ -29,4 +31,10 @@ public class Controller implements ISideMenu {
     public void studentFrontpage(ActionEvent actionEvent) {
         mainController.setPage("StudentSchema");
     }
+
+    public void studentSettings(ActionEvent actionEvent) {
+        mainController.setPage("UserSettings");
+    }
+
+    public void studentRegistrations() { mainController.setPage("StudentRegistrations"); }
 }

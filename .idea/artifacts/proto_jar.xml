@@ -1,0 +1,29 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="proto:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/proto_jar</output-path>
+    <root id="archive" name="proto.jar">
+      <element id="module-output" name="proto" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/jfoenix/jfoenix/9.0.10/jfoenix-9.0.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/de/jensd/fontawesomefx-commons/9.1.2/fontawesomefx-commons-9.1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/microsoft/sqlserver/mssql-jdbc/9.1.1.jre15-preview/mssql-jdbc-9.1.1.jre15-preview.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../JavaFX/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../JavaFX/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../JavaFX/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../JavaFX/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../JavaFX/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../JavaFX/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../JavaFX/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../JavaFX/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/de/jensd/fontawesomefx-fontawesome/4.7.0-9.1.2/fontawesomefx-fontawesome-4.7.0-9.1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/de/jensd/fontawesomefx-materialdesignfont/2.0.26-9.1.2/fontawesomefx-materialdesignfont-2.0.26-9.1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/de/jensd/fontawesomefx-controls/9.1.2/fontawesomefx-controls-9.1.2.jar" path-in-jar="/" />
+      <element id="library" level="project" name="com.jfoenix:jfoenix:9.0.10" />
+      <element id="library" level="project" name="com.microsoft.sqlserver:mssql-jdbc:9.1.1.jre15-preview" />
+      <element id="library" level="project" name="de.jensd:fontawesomefx-commons:9.1.2" />
+      <element id="library" level="project" name="de.jensd:fontawesomefx-controls:9.1.2" />
+      <element id="library" level="project" name="de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2" />
+      <element id="library" level="project" name="de.jensd:fontawesomefx-materialdesignfont:2.0.26-9.1.2" />
+      <element id="library" level="project" name="lib1" />
+    </root>
+  </artifact>
+</component>

@@ -10,23 +10,25 @@ public class Lesson {
     private Timestamp stopTime;
 
     public Lesson() {
+        this.id = -1;
         this.courseName = "EMPTY";
         this.startTime = null;
         this.stopTime = null;
     }
 
     public Lesson(int id, String courseName, Timestamp startTime, Timestamp stopTime) {
+        this.id = id;
         this.courseName = courseName;
         this.startTime = startTime;
         this.stopTime = stopTime;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCourseName() {
@@ -55,8 +57,22 @@ public class Lesson {
 
     @Override
     public String toString() {
-        if(courseName == "EMPTY") return "";
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        return courseName + "\n" + sdf.format(startTime) + " - " + sdf.format(stopTime);
+        return "Lesson{" +
+                "id=" + id +
+                ", courseName='" + courseName + '\'' +
+                ", startTime=" + startTime +
+                ", stopTime=" + stopTime +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this) return true;
+
+        if(!(o instanceof Lesson)) return false;
+
+        Lesson l = (Lesson) o;
+
+        return id == l.getId();
     }
 }

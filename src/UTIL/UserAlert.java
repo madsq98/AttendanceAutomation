@@ -8,6 +8,6 @@ public class UserAlert {
         a.setTitle(title);
         a.setHeaderText(title);
         a.setContentText(text);
-        a.show();
+        a.showAndWait();
     }
 }

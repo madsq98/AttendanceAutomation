@@ -7,15 +7,19 @@ import BLL.AttendanceBLL;
 import BLL.SchemaBLL;
 import GUI.Dashboard.Interfaces.ISideMenu;
 import GUI.Dashboard.Interfaces.ISubPage;
+import UTIL.UserAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -48,12 +52,27 @@ public class Controller {
 
     }
 
-    public void logout(ActionEvent actionEvent) {
-        exit();
+    public void logout(ActionEvent actionEvent) throws IOException {
+        Stage root1 = (Stage) dRoot.getScene().getWindow();
+
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("../Login/View.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.show();
+
+        root1.close();
     }
 
     public void setAccount(Account loggedInUser) {
-        this.attendanceBLL = new AttendanceBLL(loggedInUser);
+        try {
+            this.attendanceBLL = new AttendanceBLL(loggedInUser);
+            this.accountBLL = new AccountBLL();
+        } catch (SQLException e) {
+            UserAlert.showAlert("Der opstod en fejl!",e.getMessage(), Alert.AlertType.ERROR);
+        }
         this.loggedInUser = loggedInUser;
         try {
             schemaBLL = new SchemaBLL(loggedInUser);
@@ -84,10 +103,11 @@ public class Controller {
             contentBorderPane.setCenter(p);
 
             ISubPage controller = loader.getController();
+            controller.setAttendanceBLL(attendanceBLL);
             controller.setAccountBLL(accountBLL);
             controller.setCurrentAccount(loggedInUser);
             controller.setSchemaBLL(schemaBLL);
-            controller.setAttendanceBLL(attendanceBLL);
+            controller.load();
         } catch(IOException e) {
             e.printStackTrace();
         }

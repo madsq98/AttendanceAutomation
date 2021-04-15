@@ -58,6 +58,11 @@ public class Controller implements ISubPage {
     public void setAttendanceBLL(AttendanceBLL attendanceBLL) { this.attendanceBLL = attendanceBLL; }
 
     @Override
+    public void load() {
+
+    }
+
+    @Override
     public void setSchemaBLL(SchemaBLL schemaBLL) {
         this.schemaBLL = schemaBLL;
 
@@ -81,7 +86,7 @@ public class Controller implements ISubPage {
             if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
             String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
             sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
-            sign = (l.equals(currentLesson)) ? "⌛" : sign;
+            sign = (l.equals(currentLesson) && !attendanceBLL.hasAttended(currentAccount,l)) ? "⌛" : sign;
             return new SimpleStringProperty(l.getCourseName() + " " + sign + "\n" + sdf.format(l.getStartTime()) + " - " + sdf.format(l.getStopTime()));
         });
         schemaTuesday.setCellValueFactory(c -> {
@@ -89,7 +94,7 @@ public class Controller implements ISubPage {
             if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
             String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
             sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
-            sign = (l.equals(currentLesson)) ? "⌛" : sign;
+            sign = (l.equals(currentLesson) && !attendanceBLL.hasAttended(currentAccount,l)) ? "⌛" : sign;
             return new SimpleStringProperty(l.getCourseName() + " " + sign + "\n" + sdf.format(l.getStartTime()) + " - " + sdf.format(l.getStopTime()));
         });
         schemaWednesday.setCellValueFactory(c -> {
@@ -97,7 +102,7 @@ public class Controller implements ISubPage {
             if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
             String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
             sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
-            sign = (l.equals(currentLesson)) ? "⌛" : sign;
+            sign = (l.equals(currentLesson) && !attendanceBLL.hasAttended(currentAccount,l)) ? "⌛" : sign;
             return new SimpleStringProperty(l.getCourseName() + " " + sign + "\n" + sdf.format(l.getStartTime()) + " - " + sdf.format(l.getStopTime()));
         });
         schemaThursday.setCellValueFactory(c -> {
@@ -105,7 +110,7 @@ public class Controller implements ISubPage {
             if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
             String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
             sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
-            sign = (l.equals(currentLesson)) ? "⌛" : sign;
+            sign = (l.equals(currentLesson) && !attendanceBLL.hasAttended(currentAccount,l)) ? "⌛" : sign;
             return new SimpleStringProperty(l.getCourseName() + " " + sign + "\n" + sdf.format(l.getStartTime()) + " - " + sdf.format(l.getStopTime()));
         });
         schemaFriday.setCellValueFactory(c -> {
@@ -113,7 +118,7 @@ public class Controller implements ISubPage {
             if(l == null || l.getCourseName() == "EMPTY") return new SimpleStringProperty();
             String sign = (attendanceBLL.hasAttended(currentAccount,l)) ? "✔" : "✖";
             sign = (SchemaBLL.isInFuture(l)) ? "" : sign;
-            sign = (l.equals(currentLesson)) ? "⌛" : sign;
+            sign = (l.equals(currentLesson) && !attendanceBLL.hasAttended(currentAccount,l)) ? "⌛" : sign;
             return new SimpleStringProperty(l.getCourseName() + " " + sign + "\n" + sdf.format(l.getStartTime()) + " - " + sdf.format(l.getStopTime()));
         });
 
@@ -135,17 +140,21 @@ public class Controller implements ISubPage {
         }
     }
 
-    public void registerAttendance(ActionEvent actionEvent) throws SQLException {
-        if(currentLesson == null) {
-            UserAlert.showAlert("Åh nej!", "Du har ingen lektioner lige nu, og du kan derfor ikke registrere din tilstedeværelse!", Alert.AlertType.WARNING);
-        }else {
-            attendanceBLL.setAttended(currentAccount,currentLesson);
-            UserAlert.showAlert("SÅDAN JOHAN!", "Du Har registeret tilstedeværelse", Alert.AlertType.WARNING);
+    public void registerAttendance(ActionEvent actionEvent) {
+        if(currentLesson == null)
+            UserAlert.showAlert("Åh nej!","Du har ingen lektioner lige nu, og du kan derfor ikke registrere din tilstedeværelse!", Alert.AlertType.WARNING);
+        else {
+            if(attendanceBLL.hasAttended(currentAccount,currentLesson)) {
+                UserAlert.showAlert("Du er her allerede!","Du har allerede registreret din tilstedeværelse for denne lektion!", Alert.AlertType.INFORMATION);
+                return;
+            }
+            try {
+                attendanceBLL.setAttended(currentAccount, currentLesson);
+                setItemsInSchema();
+                UserAlert.showAlert("Registreret!","Din registrering blev gemt!", Alert.AlertType.CONFIRMATION);
+            } catch (SQLException e) {
+                UserAlert.showAlert("Der opstod en fejl!", e.getMessage(), Alert.AlertType.ERROR);
+            }
         }
-
-
-
     }
-
-
 }

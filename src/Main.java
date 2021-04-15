@@ -1,9 +1,11 @@
 import DAL.Server.MSSQLHandler;
+import UTIL.UserAlert;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -19,7 +21,7 @@ public class Main extends Application {
         try {
             MSSQLHandler.connect("10.176.111.31", "CSe20A_31", "CSe20A_31", "fravær");
         } catch(Exception e) {
-            e.printStackTrace();
+            UserAlert.showAlert("Der opstod en fejl!","Vi kunne desværre ikke oprette forbindelse til databasen...", Alert.AlertType.ERROR);
             System.exit(0);
         }
 

@@ -1,12 +1,16 @@
 package BLL;
 
 import BE.Account;
-import DAL.Server.AccountDAL;
+import DAL.AccountDAL;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountBLL {
     private AccountDAL dbAccess;
+
+    private List<Account> allAccounts;
 
     public AccountBLL() {
         dbAccess = new AccountDAL();
@@ -32,5 +36,13 @@ public class AccountBLL {
         a.setId(newId);
 
         return true;
+    }
+
+    public void updateAccount(Account a) throws SQLException {
+        dbAccess.updateAccount(a);
+    }
+
+    public Account getAccountFromId(int id) throws SQLException {
+        return dbAccess.getAccountById(id);
     }
 }

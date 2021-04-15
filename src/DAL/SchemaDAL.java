@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.Account;
+import BE.Course;
 import BE.Lesson;
 import DAL.Server.MSSQLHandler;
 import javafx.collections.FXCollections;
@@ -14,6 +15,18 @@ public class SchemaDAL {
 
     public SchemaDAL() {
         conn = MSSQLHandler.getConnection();
+    }
+
+    public Lesson getLessonById(int id) throws SQLException {
+        String query = "SELECT Lessons.id,Lessons.start,Lessons.stop,Courses.courseName FROM Lessons INNER JOIN Courses ON Courses.id = Lessons.courseId WHERE Lessons.id = ?;";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setInt(1,id);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next())
+            return new Lesson(rs.getInt("id"),rs.getString("courseName"),rs.getTimestamp("start"),rs.getTimestamp("stop"));
+        else
+            return null;
     }
 
     public List<Lesson> getAllLessons(Account a) throws SQLException {
@@ -34,10 +47,11 @@ public class SchemaDAL {
             ResultSet rs2 = ps2.executeQuery();
 
             while(rs2.next()) {
+                int id = rs2.getInt("id");
                 Timestamp start = rs2.getTimestamp("start");
                 Timestamp stop = rs2.getTimestamp("stop");
 
-                Lesson l = new Lesson(courseId,courseName,start,stop);
+                Lesson l = new Lesson(id,courseName,start,stop);
 
                 lessons.add(l);
             }
@@ -46,5 +60,19 @@ public class SchemaDAL {
         lessons.sort( (l1, l2) -> l1.getStartTime().compareTo(l2.getStartTime()) );
 
         return lessons;
+    }
+
+    public List<Course> getUserCourses(Account a) throws SQLException {
+        String query = "SELECT UserCourses.courseId, Courses.courseName FROM UserCourses INNER JOIN Courses ON Courses.id = UserCourses.courseId WHERE UserCourses.accountId = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setInt(1,a.getId());
+        ResultSet rs = ps.executeQuery();
+
+        List<Course> returnList = new ArrayList<>();
+        while(rs.next()) {
+            returnList.add(new Course(rs.getInt("courseId"),rs.getString("courseName")));
+        }
+
+        return returnList;
     }
 }

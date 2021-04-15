@@ -2,7 +2,7 @@ package GUI.Login;
 
 import BE.Account;
 import BLL.AccountBLL;
-import DAL.Server.AccountDAL;
+import DAL.AccountDAL;
 import UTIL.UserAlert;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -28,6 +28,11 @@ public class Controller {
 
     public void exit(){
         System.exit(0);
+    }
+
+    public void initialize() {
+        loginUsername.setText("mads1234");
+        loginPassword.setText("123");
     }
 
     public void minimize() {
