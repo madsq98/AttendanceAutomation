@@ -136,40 +136,5 @@ public class Controller implements ISubPage {
     }
 
     private void update(boolean all) {
-        if(fromDate != null && toDate != null) {
-            periodLessons.setAll(schemaBLL.getLessonsInterval(fromDate, toDate, selectedCourse));
-            allPeriodLessons.setAll(schemaBLL.getLessonsInterval(fromDate,toDate,null));
-            periodAttendance.setAll(attendanceBLL.getAttendanceInterval(fromDate,toDate,selectedCourse));
-
-            if(all) {
-                XYChart.Series ds = new XYChart.Series();
-                for (Course c : observableCourses) {
-                    double att = attendanceBLL.getCourseAttendance(currentAccount, c, allPeriodLessons, periodAttendance);
-                    String name = c.getName();
-
-                    ds.getData().add(new XYChart.Data(name, att));
-                }
-
-                attendanceChart.getData().setAll(ds);
-            }
-
-            XYChart.Series ds2 = new XYChart.Series();
-            int i = 1;
-            for(double abs : attendanceBLL.getDaysAbsence(currentAccount,selectedCourse,periodLessons,periodAttendance)) {
-                String name;
-                switch(i) {
-                    case 1 -> name = "Mandag";
-                    case 2 -> name = "Tirsdag";
-                    case 3 -> name = "Onsdag";
-                    case 4 -> name = "Torsdag";
-                    case 5 -> name = "Fredag";
-                    default -> name = "?";
-                }
-
-                ds2.getData().add(new XYChart.Data(name,abs));
-                i++;
-            }
-            absenceDaysChart.getData().setAll(ds2);
-        }
     }
 }
