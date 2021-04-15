@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.Account;
+import BE.Course;
 import BE.Lesson;
 import DAL.Server.MSSQLHandler;
 import javafx.collections.FXCollections;
@@ -59,5 +60,19 @@ public class SchemaDAL {
         lessons.sort( (l1, l2) -> l1.getStartTime().compareTo(l2.getStartTime()) );
 
         return lessons;
+    }
+
+    public List<Course> getUserCourses(Account a) throws SQLException {
+        String query = "SELECT UserCourses.courseId, Courses.courseName FROM UserCourses INNER JOIN Courses ON Courses.id = UserCourses.courseId WHERE UserCourses.accountId = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setInt(1,a.getId());
+        ResultSet rs = ps.executeQuery();
+
+        List<Course> returnList = new ArrayList<>();
+        while(rs.next()) {
+            returnList.add(new Course(rs.getInt("courseId"),rs.getString("courseName")));
+        }
+
+        return returnList;
     }
 }

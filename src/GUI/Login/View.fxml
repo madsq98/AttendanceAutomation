@@ -26,9 +26,9 @@
          </children>
       </Pane>
       <JFXTextField fx:id="loginUsername" focusColor="#7fa7ca" layoutX="289.0" layoutY="287.0" prefHeight="25.0" prefWidth="221.0" promptText="Brugernavn" unFocusColor="#b7c4d0" />
-      <JFXPasswordField fx:id="loginPassword" focusColor="#7fa7ca" layoutX="289.0" layoutY="343.0" prefHeight="25.0" prefWidth="221.0" promptText="Password" unFocusColor="#b7c4d0" />
-      <JFXButton defaultButton="true" layoutX="293.0" layoutY="401.0" onAction="#login" prefHeight="25.0" prefWidth="221.0" styleClass="buttons" text="Login" />
-      <JFXButton cancelButton="true" layoutX="293.0" layoutY="444.0" onAction="#exit" prefHeight="25.0" prefWidth="221.0" styleClass="buttons" text="Cancel" />
+      <JFXPasswordField fx:id="loginPassword" focusColor="#7fa7ca" layoutX="289.0" layoutY="343.0" prefHeight="25.0" prefWidth="221.0" promptText="Adgangskode" unFocusColor="#b7c4d0" />
+      <JFXButton defaultButton="true" layoutX="293.0" layoutY="401.0" onAction="#login" prefHeight="25.0" prefWidth="221.0" styleClass="buttons" text="Log ind" />
+      <JFXButton cancelButton="true" layoutX="293.0" layoutY="444.0" onAction="#exit" prefHeight="25.0" prefWidth="221.0" styleClass="buttons" text="Annuller" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="images/easvlogo.png" />
