@@ -107,7 +107,33 @@ public class Controller {
             controller.setAccountBLL(accountBLL);
             controller.setCurrentAccount(loggedInUser);
             controller.setSchemaBLL(schemaBLL);
+            controller.setMainController(this);
             controller.load();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setPage(String page, Account a) {
+        String path = "./" + page + "/View.fxml";
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(path));
+            Parent p = loader.load();
+
+            contentBorderPane.setCenter(p);
+
+            try {
+                ISubPage controller = loader.getController();
+                controller.setAttendanceBLL(new AttendanceBLL(a));
+                controller.setAccountBLL(new AccountBLL());
+                controller.setCurrentAccount(a);
+                controller.setSchemaBLL(new SchemaBLL(a));
+                controller.setMainController(this);
+                controller.load();
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
         } catch(IOException e) {
             e.printStackTrace();
         }

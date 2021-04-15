@@ -1,4 +1,4 @@
-package GUI.Dashboard.StudentStatistics;
+package GUI.Dashboard.TeacherStudentStatistics;
 
 import BE.Account;
 import BE.Attendance;
@@ -10,6 +10,7 @@ import BLL.SchemaBLL;
 import GUI.Dashboard.Interfaces.ISubPage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -17,17 +18,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import static java.lang.Double.NaN;
 
 public class Controller implements ISubPage {
     private Account currentAccount;
@@ -63,10 +58,13 @@ public class Controller implements ISubPage {
     private CategoryAxis xAxisDays;
     @FXML
     private NumberAxis yAxisDays;
+    @FXML
+    private Label studentNameLabel;
 
     @Override
     public void setCurrentAccount(Account a) {
         currentAccount = a;
+        studentNameLabel.setText(a.getFirstName() + " " + a.getLastName());
     }
 
     @Override
@@ -177,5 +175,9 @@ public class Controller implements ISubPage {
             }
             absenceDaysChart.getData().setAll(ds2);
         }
+    }
+
+    public void backToList(ActionEvent actionEvent) {
+        mainController.setPage("TeacherStudentList");
     }
 }

@@ -30,6 +30,7 @@ public class Controller implements ISubPage {
     private AccountBLL accountBLL;
     private SchemaBLL schemaBLL;
     private AttendanceBLL attendanceBLL;
+    private GUI.Dashboard.Controller mainController;
 
     private LocalDate fromDate;
     private LocalDate toDate;
@@ -88,6 +89,11 @@ public class Controller implements ISubPage {
 
     @Override
     public void setAttendanceBLL(AttendanceBLL attendanceBLL) { this.attendanceBLL = attendanceBLL; }
+
+    @Override
+    public void setMainController(GUI.Dashboard.Controller controller) {
+        this.mainController = controller;
+    }
 
     @Override
     public void load() {
