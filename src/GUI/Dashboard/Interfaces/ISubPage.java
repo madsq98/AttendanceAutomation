@@ -15,4 +15,8 @@ public interface ISubPage {
     public void setSchemaBLL(SchemaBLL schemaBLL);
 
     public void setAttendanceBLL(AttendanceBLL attendanceBLL);
+
+    public void setMainController(GUI.Dashboard.Controller controller);
+
+    public void load();
 }

@@ -1,7 +1,8 @@
-package DAL.Server;
+package DAL;
 
 import BE.Account;
 import BE.UserType;
+import DAL.Server.MSSQLHandler;
 
 import javax.xml.transform.Result;
 import java.sql.*;
@@ -18,6 +19,32 @@ public class AccountDAL {
 
         PreparedStatement execute = conn.prepareStatement(query);
         execute.setString(1,username);
+
+        ResultSet rs = execute.executeQuery();
+
+        if(!rs.next())
+            return null;
+
+        int id = rs.getInt("id");
+        String user = rs.getString("username");
+        String pass = rs.getString("password");
+        UserType type = (rs.getInt("type") == 1) ? UserType.STUDENT : UserType.TEACHER;
+        String firstName = rs.getString("firstName");
+        String lastName = rs.getString("lastName");
+        String email = rs.getString("email");
+        int phone = rs.getInt("phone");
+
+        Account returnAccount = new Account(user,pass,type,firstName,lastName,email,phone);
+        returnAccount.setId(id);
+
+        return returnAccount;
+    }
+
+    public Account getAccountById(int idd) throws SQLException {
+        String query = "SELECT Accounts.id, Accounts.username, Accounts.password, Accounts.type, UserInfo.firstName, UserInfo.lastName, UserInfo.email, UserInfo.phone FROM Accounts INNER JOIN UserInfo ON UserInfo.accountId = Accounts.id WHERE Accounts.id = ?";
+
+        PreparedStatement execute = conn.prepareStatement(query);
+        execute.setInt(1,idd);
 
         ResultSet rs = execute.executeQuery();
 
@@ -73,5 +100,23 @@ public class AccountDAL {
         }
         else
             return -1;
+    }
+
+    public void updateAccount(Account a) throws SQLException {
+        int accountId = a.getId();
+        String query1 = "UPDATE Accounts SET password = ? WHERE id = ?;";
+        String query2 = "UPDATE UserInfo SET firstName = ?, lastName = ?, email = ?, phone = ? WHERE accountId = ?;";
+        PreparedStatement ps1 = conn.prepareStatement(query1);
+        ps1.setString(1,a.getPassword());
+        ps1.setInt(2,a.getId());
+        PreparedStatement ps2 = conn.prepareStatement(query2);
+        ps2.setString(1,a.getFirstName());
+        ps2.setString(2,a.getLastName());
+        ps2.setString(3,a.getEmail());
+        ps2.setInt(4,a.getPhone());
+        ps2.setInt(5,a.getId());
+
+        ps1.executeUpdate();
+        ps2.executeUpdate();
     }
 }

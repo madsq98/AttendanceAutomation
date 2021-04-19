@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="550.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Dashboard.UserSettings.Controller">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="550.0" prefWidth="570.0">
+         <padding>
+            <Insets left="50.0" right="50.0" top="15.0" />
+         </padding>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Indstillinger">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="25.0" />
+               </VBox.margin>
+            </Text>
+            <Label text="Fornavn:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="firstNameField" alignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXTextField>
+             <Label text="Efternavn:">
+                 <font>
+                     <Font size="15.0" />
+                 </font>
+             </Label>
+             <JFXTextField fx:id="lastNameField" alignment="CENTER">
+                 <VBox.margin>
+                     <Insets bottom="20.0" />
+                 </VBox.margin>
+             </JFXTextField>
+             <Label text="E-mail:">
+                 <font>
+                     <Font size="15.0" />
+                 </font>
+             </Label>
+             <JFXTextField fx:id="emailField" alignment="CENTER">
+                 <VBox.margin>
+                     <Insets bottom="20.0" />
+                 </VBox.margin>
+             </JFXTextField>
+             <Label text="Telefon:">
+                 <font>
+                     <Font size="15.0" />
+                 </font>
+             </Label>
+             <JFXTextField fx:id="phoneField" alignment="CENTER">
+                 <VBox.margin>
+                     <Insets bottom="35.0" />
+                 </VBox.margin>
+             </JFXTextField>
+             <Label text="Ændre adgangskode:">
+                 <font>
+                     <Font size="15.0" />
+                 </font>
+             </Label>
+             <JFXPasswordField fx:id="passwordField" alignment="CENTER" promptText="Efterlad tomt for at beholde din adgangskode">
+                 <VBox.margin>
+                     <Insets bottom="20.0" />
+                 </VBox.margin>
+             </JFXPasswordField>
+             <Label fx:id="passwordAgainLabel" text="Gentag adgangskode:" visible="false">
+                 <font>
+                     <Font size="12.0" />
+                 </font>
+             </Label>
+             <JFXPasswordField fx:id="passwordAgainField" alignment="CENTER" visible="false">
+                 <VBox.margin>
+                     <Insets bottom="20.0" />
+                 </VBox.margin>
+             </JFXPasswordField>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <JFXButton onAction="#saveSettings" prefHeight="35.0" prefWidth="184.0" styleClass="dashboard-button" text="Gem ændringer">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton onAction="#resetSettings" prefHeight="35.0" prefWidth="184.0" styleClass="dashboard-button" text="Nulstil">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
