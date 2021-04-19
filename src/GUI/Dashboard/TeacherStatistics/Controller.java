@@ -17,19 +17,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Controller implements ISubPage {
+
     private Course selectedCourse;
+    @FXML
+    private ComboBox<Course> courseSelector;
     private Account currentAccount;
     private AccountBLL accountBLL;
     private SchemaBLL schemaBLL;
     private AttendanceBLL attendanceBLL;
     private GUI.Dashboard.Controller mainController;
+
     private ObservableList<Course> observableCourses;
+    private ObservableList<Account> observableAccounts;
     private ObservableList<Lesson> observableLessons;
-    private ObservableList<Account> observableAccount;
-
-
-    @FXML
-    private ComboBox<Course>  courseSelector;
 
     @Override
     public void setCurrentAccount(Account a) {
@@ -49,10 +49,9 @@ public class Controller implements ISubPage {
             observableCourses.addAll(schemaBLL.getUserCourses(currentAccount));
             courseSelector.setItems(observableCourses);
             courseSelector.getSelectionModel().selectFirst();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
     }
 
     @Override
@@ -65,33 +64,32 @@ public class Controller implements ISubPage {
 
     @Override
     public void load() {
+
     }
 
     public void initialize() {
-        observableAccount = FXCollections.observableArrayList();
-        observableCourses = FXCollections.observableArrayList();
-        observableLessons = FXCollections.observableArrayList();
 
+        observableCourses = FXCollections.observableArrayList();
+        observableAccounts = FXCollections.observableArrayList();
+        observableLessons = FXCollections.observableArrayList();
 
         courseSelector.valueProperty().addListener((observable, oldValue, newValue) -> {
             selectedCourse = newValue;
-            try {
-                update();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            update();
         });
     }
 
-    public void update () throws SQLException {
+    public void update() {
         if (selectedCourse != null) {
-            LocalDate firstDate = schemaBLL.getFirstLesson(selectedCourse).getStartTime().toLocalDateTime().toLocalDate();
-            LocalDate lastDate = LocalDate.now();
-            observableLessons.setAll(schemaBLL.getLessonsInterval(firstDate,lastDate,selectedCourse));
-            observableAccount.setAll(attendanceBLL.getAccountsFromCourse(selectedCourse));
+            try {
+                LocalDate firstDate = schemaBLL.getFirstLesson(selectedCourse).getStartTime().toLocalDateTime().toLocalDate();
+                LocalDate lastDate = LocalDate.now();
 
+                observableLessons.setAll(schemaBLL.getLessonsInterval(firstDate, lastDate, selectedCourse));
+                observableAccounts.setAll(attendanceBLL.getAccountsFromCourse(selectedCourse));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
-
     }
 }
