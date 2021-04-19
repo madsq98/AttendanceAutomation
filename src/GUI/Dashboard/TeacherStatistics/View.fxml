@@ -9,6 +9,17 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="GUI.Dashboard.TeacherStatistics.Controller"
-            prefHeight="400.0" prefWidth="600.0">
-
+            prefHeight="600.0" prefWidth="570.0">
+    <children>
+    <HBox alignment="CENTER" prefHeight="75.0" prefWidth="570.0" styleClass="background-dark">
+        <children>
+            <VBox alignment="CENTER" prefHeight="54.0" prefWidth="180.0">
+                <children>
+                    <Label text="Fag:" />
+                    <ComboBox fx:id="courseSelector" prefHeight="25.0" prefWidth="170.0" />
+                </children>
+            </VBox>
+        </children>
+    </HBox>
+    </children>
 </AnchorPane>
