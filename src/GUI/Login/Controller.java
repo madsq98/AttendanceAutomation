@@ -6,6 +6,7 @@ import DAL.AccountDAL;
 import UTIL.UserAlert;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,6 +26,8 @@ public class Controller {
     public JFXPasswordField loginPassword;
     @FXML
     private AnchorPane root;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     public void exit(){
         System.exit(0);
@@ -61,6 +64,31 @@ public class Controller {
                 stage.initStyle(StageStyle.UNDECORATED);
                 stage.setScene(scene);
                 stage.show();
+
+                scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        xOffset = event.getSceneX();
+                        yOffset = event.getSceneY();
+                    }
+                });
+
+                scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        stage.setX(event.getScreenX() - xOffset);
+                        stage.setY(event.getScreenY() - yOffset);
+                        stage.setOpacity(0.8f);
+                    }
+                });
+
+                scene.setOnMouseDragExited((event) -> {
+                    stage.setOpacity(1.0f);
+                });
+
+                scene.setOnMouseReleased((event) -> {
+                    stage.setOpacity(1.0f);
+                });
 
                 GUI.Dashboard.Controller controller = fxmlLoader.getController();
 
