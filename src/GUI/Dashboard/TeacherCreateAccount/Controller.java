@@ -79,7 +79,7 @@ public class Controller implements ISubPage {
             coursesToAdd.setItems(observableCoursesToAdd);
             addedCourses.setItems(observableCoursesAdded);
         } catch(SQLException e) {
-            e.printStackTrace();
+            UserAlert.showDatabaseError();
         }
     }
 
@@ -142,7 +142,7 @@ public class Controller implements ISubPage {
         try {
             observableCoursesToAdd.setAll(schemaBLL.getAllCourses());
         } catch(SQLException e) {
-            e.printStackTrace();
+            UserAlert.showDatabaseError();
         }
     }
 
@@ -179,7 +179,7 @@ public class Controller implements ISubPage {
             UserAlert.showAlert("Sådan!","Brugeren blev oprettet!", Alert.AlertType.INFORMATION);
             reset();
         } catch(SQLException e) {
-            e.printStackTrace();
+            UserAlert.showDatabaseError();
         }
     }
 }
