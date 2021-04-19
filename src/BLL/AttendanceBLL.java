@@ -70,6 +70,29 @@ public class AttendanceBLL {
         return returnList;
     }
 
+    public double getAllCourseAttendances(List<Account> a, Course c, List<Lesson> lessons) {
+        double totalLessons = 0;
+        double totalAttended = 0;
+
+        for(Account acc : a) {
+            for (Lesson l : lessons) {
+                if (c.getId() != -1) {
+                    if (l.getCourseName().equals(c.getName())) {
+                        totalLessons++;
+                        if (hasAttended(acc, l))
+                            totalAttended++;
+                    }
+                } else {
+                    totalLessons++;
+                    if (hasAttended(acc, l))
+                        totalAttended++;
+                }
+            }
+        }
+
+        return (totalAttended / totalLessons) * 100;
+    }
+
     public double getCourseAttendance(Account a, Course c, List<Lesson> lessons, List<Attendance> attendances) {
         double totalLessons = 0;
         double totalAttended = 0;
