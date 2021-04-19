@@ -1,4 +1,4 @@
-package GUI.Dashboard.StudentStatistics;
+package GUI.Dashboard.TeacherStudentStatistics;
 
 import BE.Account;
 import BE.Attendance;
@@ -10,6 +10,7 @@ import BLL.SchemaBLL;
 import GUI.Dashboard.Interfaces.ISubPage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -17,17 +18,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import static java.lang.Double.NaN;
 
 public class Controller implements ISubPage {
     private Account currentAccount;
@@ -63,10 +58,13 @@ public class Controller implements ISubPage {
     private CategoryAxis xAxisDays;
     @FXML
     private NumberAxis yAxisDays;
+    @FXML
+    private Label studentNameLabel;
 
     @Override
     public void setCurrentAccount(Account a) {
         currentAccount = a;
+        studentNameLabel.setText(a.getFirstName() + " " + a.getLastName());
     }
 
     @Override
@@ -142,5 +140,44 @@ public class Controller implements ISubPage {
     }
 
     private void update(boolean all) {
+        if(fromDate != null && toDate != null) {
+            periodLessons.setAll(schemaBLL.getLessonsInterval(fromDate, toDate, selectedCourse));
+            allPeriodLessons.setAll(schemaBLL.getLessonsInterval(fromDate,toDate,null));
+            periodAttendance.setAll(attendanceBLL.getAttendanceInterval(fromDate,toDate,selectedCourse));
+
+            if(all) {
+                XYChart.Series ds = new XYChart.Series();
+                for (Course c : observableCourses) {
+                    double att = attendanceBLL.getCourseAttendance(currentAccount, c, allPeriodLessons, periodAttendance);
+                    String name = c.getName();
+
+                    ds.getData().add(new XYChart.Data(name, att));
+                }
+
+                attendanceChart.getData().setAll(ds);
+            }
+
+            XYChart.Series ds2 = new XYChart.Series();
+            int i = 1;
+            for(double abs : attendanceBLL.getDaysAbsence(currentAccount,selectedCourse,periodLessons,periodAttendance)) {
+                String name;
+                switch(i) {
+                    case 1 -> name = "Mandag";
+                    case 2 -> name = "Tirsdag";
+                    case 3 -> name = "Onsdag";
+                    case 4 -> name = "Torsdag";
+                    case 5 -> name = "Fredag";
+                    default -> name = "?";
+                }
+
+                ds2.getData().add(new XYChart.Data(name,abs));
+                i++;
+            }
+            absenceDaysChart.getData().setAll(ds2);
+        }
+    }
+
+    public void backToList(ActionEvent actionEvent) {
+        mainController.setPage("TeacherStudentList");
     }
 }

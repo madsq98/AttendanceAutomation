@@ -121,7 +121,7 @@ public class AttendanceBLL {
     }
 
     public double getTotalAttendance(Course c, LocalDate from, LocalDate to) throws SQLException {
-        List<Account> students = dbAccess.getAccountsFromCourse(c);
+        List<Account> students = getAccountsFromCourse(c);
 
         double sumAttendance = 0;
         for(Account a : students) {
@@ -137,5 +137,9 @@ public class AttendanceBLL {
         }
 
         return sumAttendance / students.size();
+    }
+
+    public List<Account> getAccountsFromCourse(Course c) throws SQLException {
+        return dbAccess.getAccountsFromCourse(c);
     }
 }

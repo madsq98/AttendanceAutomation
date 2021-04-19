@@ -1,7 +1,9 @@
 package BLL;
 
 import BE.Account;
+import BE.Course;
 import DAL.AccountDAL;
+import DAL.AttendanceDAL;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

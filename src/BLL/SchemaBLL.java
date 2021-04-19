@@ -127,6 +127,25 @@ public class SchemaBLL {
         return returnList;
     }
 
+    public Lesson getFirstLesson(Course c) {
+        Lesson l = null;
+        for(Lesson lesson : allLessons) {
+            LocalDate start = lesson.getStartTime().toLocalDateTime().toLocalDate();
+
+            if(c != null && c.getId() != -1) {
+                if(c.getName().equals(lesson.getCourseName())) {
+                    if(l == null)
+                        l = lesson;
+                    else {
+                        if(start.isBefore(l.getStartTime().toLocalDateTime().toLocalDate()))
+                            l = lesson;
+                    }
+                }
+            }
+        }
+        return l;
+    }
+
     public static boolean isInFuture(Lesson l) {
         return l.getStartTime().toLocalDateTime().isAfter(LocalDateTime.now());
     }
