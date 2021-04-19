@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="GUI.Dashboard.TeacherStatistics.Controller"
-            prefHeight="600.0" prefWidth="570.0">
+<AnchorPane prefHeight="600.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Dashboard.TeacherStatistics.Controller">
     <children>
     <HBox alignment="CENTER" prefHeight="75.0" prefWidth="570.0" styleClass="background-dark">
         <children>
@@ -21,5 +22,14 @@
             </VBox>
         </children>
     </HBox>
+      <BarChart fx:id="barChartDays" layoutX="33.0" layoutY="75.0" prefHeight="226.0" prefWidth="504.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" fx:id="xAxisdays" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxisdays" side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <PieChart fx:id="pieChartTotalAbs" layoutX="74.0" layoutY="291.0" prefHeight="272.0" prefWidth="462.0" />
     </children>
 </AnchorPane>
