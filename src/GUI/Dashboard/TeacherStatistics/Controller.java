@@ -13,7 +13,10 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.ComboBox;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -130,10 +133,14 @@ public class Controller implements ISubPage {
 
             double totalAtt = attendanceBLL.getAllCourseAttendances(observableAccounts,selectedCourse,observableLessons);
             double totalAbs = 100 - totalAtt;
+
+            BigDecimal attFormat = new BigDecimal(totalAtt).setScale(2, RoundingMode.HALF_DOWN);
+            BigDecimal absFormat = new BigDecimal(totalAbs).setScale(2,RoundingMode.HALF_DOWN);
+
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
 
-                    new PieChart.Data("Fravær ("+totalAbs+"%)",totalAbs),
-                    new PieChart.Data("Tilstedeværelse ("+totalAtt+"%)",totalAtt)
+                    new PieChart.Data("Fravær ("+absFormat.toString()+"%)",totalAbs),
+                    new PieChart.Data("Tilstedeværelse ("+attFormat.toString()+"%)",totalAtt)
 
             );
             // create piechart objct
